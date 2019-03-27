@@ -15,6 +15,12 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
+            userid = user.username
+            cmd=["sudo", "sacctmgr", "add", "user", userid , "account=i"]
+            proc = run(cmd, stdout=PIPE, input=b'y y')
+            p= run(cmd, stdout=PIPE, input=b'y')
+            output = print(p.stdout)
+            subprocess.call(["sacctmgr", "list", "user"])
             return redirect('home')
     else:
         form = SignUpForm()
