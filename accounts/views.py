@@ -1,3 +1,7 @@
+import subprocess
+import os
+from subprocess import Popen, PIPE
+from subprocess import *
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -19,7 +23,6 @@ def signup(request):
             cmd=["sudo", "sacctmgr", "add", "user", userid , "account=i"]
             proc = run(cmd, stdout=PIPE, input=b'y y')
             p= run(cmd, stdout=PIPE, input=b'y')
-            output = print(p.stdout)
             subprocess.call(["sacctmgr", "list", "user"])
             return redirect('home')
     else:
